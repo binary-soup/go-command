@@ -7,11 +7,13 @@ import (
 	"github.com/binarysoupdev/go-commando/errors"
 )
 
+// Unmarshal decodes the given JSON bytes into the given type.
 func Unmarshal[T any](bytes []byte) (T, error) {
 	var obj T
 	return obj, json.Unmarshal(bytes, &obj)
 }
 
+// Unmarshal decodes the given JSON file into the given type.
 func UnmarshalFile[T any](path string) (T, error) {
 	var obj T
 
