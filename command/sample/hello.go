@@ -8,13 +8,19 @@ import (
 
 // Sample hello command for printing "Hello" to the console.
 type HelloCommand struct {
-	command.FlagCommandBase
+	command.CommandBase
+	command.FlagCommand
 }
 
 func NewHelloCommand() *HelloCommand {
 	return &HelloCommand{
-		FlagCommandBase: command.NewFlagCommandBase("hello", "prints \"Hello {name}\" to the console"),
+		CommandBase: command.NewCommandBase("hello", "prints \"Hello {name}\" to the console"),
 	}
+}
+
+func (cmd *HelloCommand) Initialize() error {
+	cmd.InitFlagSet(cmd.Name, cmd.Description)
+	return nil
 }
 
 func (cmd HelloCommand) Run(args []string) error {

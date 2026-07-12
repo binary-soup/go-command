@@ -1,14 +1,9 @@
 package command
 
-import (
-	"flag"
-)
-
 // A base type for commands.
 type CommandBase struct {
 	Name        string
 	Description string
-	Flags       *flag.FlagSet
 }
 
 // Create a new CommandBase from a command name and description.
