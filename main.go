@@ -7,6 +7,7 @@ import (
 
 	"github.com/binarysoupdev/go-commando/command"
 	"github.com/binarysoupdev/go-commando/command/sample"
+	"github.com/binarysoupdev/go-commando/json"
 	"github.com/binarysoupdev/got-style/style"
 )
 
@@ -16,6 +17,7 @@ func main() {
 
 	runner := command.NewRunner(
 		sample.NewHelloCommand(),
+		sample.NewConfigCommand(json.NewLoader[sample.Config]("config.json")),
 	)
 
 	if *ls || len(os.Args) < 2 {

@@ -22,6 +22,8 @@ func TestHelloCommandSuite(t *testing.T) {
 	})
 }
 
+//=======================================================
+
 func (s *HelloTestSuite) TestNameNotEmpty() {
 	//-- act
 	s.RunCommand("-name", "")

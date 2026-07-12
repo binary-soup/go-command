@@ -1,6 +1,7 @@
 package sample
 
 import (
+	"errors"
 	"fmt"
 
 	"github.com/binarysoupdev/go-commando/command"
@@ -8,23 +9,27 @@ import (
 
 // Sample hello command for printing "Hello" to the console.
 type HelloCommand struct {
-	command.FlagCommandBase
+	command.CommandBase
+	command.FlagCommand
 }
 
-// Create a new HelloCommand.
 func NewHelloCommand() *HelloCommand {
 	return &HelloCommand{
-		FlagCommandBase: command.NewFlagCommandBase("hello", "prints \"Hello {name}\" to the console"),
+		CommandBase: command.NewCommandBase("hello", "prints \"Hello {name}\" to the console"),
 	}
 }
 
-// Run the command. See usage string for details.
+func (cmd *HelloCommand) Initialize() error {
+	cmd.InitFlagSet(cmd.Name, cmd.Description)
+	return nil
+}
+
 func (cmd HelloCommand) Run(args []string) error {
 	name := cmd.Flags.String("name", "World", "name to use when saying hello")
-	cmd.Flags.Parse(args)
+	cmd.ParseFlags(args)
 
 	if *name == "" {
-		return fmt.Errorf("name cannot be empty")
+		return errors.New("name cannot be empty")
 	}
 
 	fmt.Printf("Hello %s!\n", *name)

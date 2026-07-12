@@ -35,8 +35,7 @@ func (r Runner) RunCommand(id string, args []string) error {
 		return fmt.Errorf("unknown command \"%s\"", id)
 	}
 
-	err := cmd.Initialize()
-	if err != nil {
+	if err := cmd.Initialize(); err != nil {
 		return err
 	}
 

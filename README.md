@@ -1,6 +1,6 @@
 # go-commando [![GoDoc](https://godoc.org/github.com/binarysoupdev/go-commando?status.svg)](https://pkg.go.dev/github.com/binarysoupdev/go-commando)
 
-The `go-commando` module provides tools and testing utilities for creating and testing modular types that encapsulate distinct program flow. Inspired by the _separation of concerns_ design principal.
+The `go-commando` module provides tools and testing utilities for creating and testing modular types (aka. commands) that encapsulate distinct program flow. Inspired by the _separation of concerns_ design principal.
 
 ## Basic Usage
 
@@ -14,8 +14,8 @@ type Command interface {
 	// Get the command's usage string.
 	GetUsage() string
 
-	// Initializes the command before it's run.
-	Initialize()
+	// Initializes the command before it's run and return any errors.
+	Initialize() error
 
 	// Run the command using the provided arguments and return any errors.
 	Run(args []string) error
@@ -26,21 +26,27 @@ type Command interface {
 
 ```go
 type HelloCommand struct {
-	command.FlagCommandBase
+	command.CommandBase
+	command.FlagCommand
 }
 
 func NewHelloCommand() *HelloCommand {
 	return &HelloCommand{
-		FlagCommandBase: command.NewFlagCommandBase("hello", "prints \"Hello {name}\" to the console"),
+		CommandBase: command.NewCommandBase("hello", "prints \"Hello {name}\" to the console"),
 	}
+}
+
+func (cmd *HelloCommand) Initialize() error {
+	cmd.InitFlagSet(cmd.Name, cmd.Description)
+	return nil
 }
 
 func (cmd HelloCommand) Run(args []string) error {
 	name := cmd.Flags.String("name", "World", "name to use when saying hello")
-	cmd.Flags.Parse(args)
+	cmd.ParseFlags(args)
 
 	if *name == "" {
-		return fmt.Errorf("name cannot be empty")
+		return errors.New("name cannot be empty")
 	}
 
 	fmt.Printf("Hello %s!\n", *name)
@@ -65,7 +71,7 @@ func main() {
 	}
 
 	if err := runner.RunCommand(os.Args[1], os.Args[2:]); err != nil {
-		fmt.Printf("%s %s\n", style.BoldError.Sprint("ERROR:"), err.Error())
+		fmt.Printf("Error: %s\n", err)
 	}
 }
 ```
