@@ -12,7 +12,7 @@ import (
 )
 
 type TestObject struct {
-	Data string
+	Data string `json:"data"`
 }
 
 func TestLoaderValidatePathReturnsErrorWhenPathNotFound(t *testing.T) {
