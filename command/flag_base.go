@@ -35,3 +35,7 @@ func (cmd *FlagCommandBase) Initialize() error {
 
 	return nil
 }
+
+func (cmd FlagCommandBase) ParseFlags(args []string) {
+	cmd.Flags.Parse(args)
+}

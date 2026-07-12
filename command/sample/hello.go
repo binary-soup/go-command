@@ -19,7 +19,7 @@ func NewHelloCommand() *HelloCommand {
 
 func (cmd HelloCommand) Run(args []string) error {
 	name := cmd.Flags.String("name", "World", "name to use when saying hello")
-	cmd.Flags.Parse(args)
+	cmd.ParseFlags(args)
 
 	if *name == "" {
 		return fmt.Errorf("name cannot be empty")
