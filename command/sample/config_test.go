@@ -52,7 +52,20 @@ func (s *ConfigTestSuite) TestRunFailsWhenLoadConfigFails() {
 	s.RequireResultFail("error loading config")
 }
 
-func (s *ConfigTestSuite) TestRunFailsWhenConfigVersionIsUnsupported() {
+func (s *ConfigTestSuite) TestRunFailsWhenConfigVersionIsLessThanMin() {
+	//-- arrange
+	s.Config.Version = sample.MIN_CONFIG_VERSION - 1
+	err := json.MarshalFile(s.Config, s.ConfigLoader.Path)
+	s.Require().NoError(err)
+
+	//-- act
+	s.RunCommand()
+
+	//-- assert
+	s.RequireResultFail(fmt.Sprintf("config version \"%d\" unsupported", s.Config.Version))
+}
+
+func (s *ConfigTestSuite) TestRunFailsWhenConfigVersionIsGreaterThanCurrent() {
 	//-- arrange
 	s.Config.Version = sample.CONFIG_VERSION + 1
 	err := json.MarshalFile(s.Config, s.ConfigLoader.Path)

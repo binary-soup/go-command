@@ -9,13 +9,17 @@ import (
 	"github.com/binarysoupdev/go-commando/types"
 )
 
-const CONFIG_VERSION = 2
+const (
+	MIN_CONFIG_VERSION = 1
+	CONFIG_VERSION     = 2
+)
 
 type Config struct {
 	Version types.Version `json:"version"`
 	Data    string        `json:"data"`
 }
 
+// Sample config command for loading, verifying, and displaying a config file.
 type ConfigCommand struct {
 	command.CommandBase
 	command.ConfigCommand[Config]
@@ -23,7 +27,7 @@ type ConfigCommand struct {
 
 func NewConfigCommand(configLoader json.Loader[Config]) *ConfigCommand {
 	return &ConfigCommand{
-		CommandBase:   command.NewCommandBase("config", "load and display the config file"),
+		CommandBase:   command.NewCommandBase("config", "load, verify, and display a config file"),
 		ConfigCommand: command.NewConfigCommand(configLoader),
 	}
 }
@@ -33,7 +37,7 @@ func (cmd *ConfigCommand) Initialize() error {
 }
 
 func (cmd ConfigCommand) Run(args []string) error {
-	if cmd.Config.Version.IsUnsupported(CONFIG_VERSION) {
+	if cmd.Config.Version.IsUnsupported(MIN_CONFIG_VERSION, CONFIG_VERSION) {
 		return errors.Format("config version \"%d\" unsupported", cmd.Config.Version)
 	}
 

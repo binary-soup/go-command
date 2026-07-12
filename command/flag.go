@@ -7,6 +7,7 @@ import (
 	"github.com/binarysoupdev/got-style/style"
 )
 
+// Command component for parsing arguments using the flag package.
 type FlagCommand struct {
 	Flags *flag.FlagSet
 }
@@ -21,6 +22,7 @@ func (cmd *FlagCommand) InitFlagSet(name, usage string) {
 	}
 }
 
+// Shorthand for cmd.Flags.Parse(args).
 func (cmd FlagCommand) ParseFlags(args []string) {
 	cmd.Flags.Parse(args)
 }

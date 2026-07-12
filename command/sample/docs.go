@@ -1,6 +1,6 @@
 // Package sample provides sample commands that demonstrate the command package.
 //
-// Boiler plate flag-based command for convenience:
+// Boiler plate command for convenience:
 //
 //	type SampleCommand struct {
 //		command.CommandBase

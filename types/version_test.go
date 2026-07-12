@@ -9,11 +9,12 @@ import (
 
 func TestIsVersionUnsupportedReturnsTrueWhenVersionLessThanMin(t *testing.T) {
 	//-- arrange
+	const MIN_VERSION = 1
 	const CURRENT_VERSION = 1
 	version := types.Version(0)
 
 	//-- act
-	res := version.IsUnsupported(CURRENT_VERSION)
+	res := version.IsUnsupported(MIN_VERSION, CURRENT_VERSION)
 
 	//-- assert
 	require.True(t, res)
@@ -21,11 +22,12 @@ func TestIsVersionUnsupportedReturnsTrueWhenVersionLessThanMin(t *testing.T) {
 
 func TestIsVersionUnsupportedReturnsTrueWhenVersionGreaterThanCurrent(t *testing.T) {
 	//-- arrange
+	const MIN_VERSION = 1
 	const CURRENT_VERSION = 1
 	version := types.Version(CURRENT_VERSION + 1)
 
 	//-- act
-	res := version.IsUnsupported(CURRENT_VERSION)
+	res := version.IsUnsupported(MIN_VERSION, CURRENT_VERSION)
 
 	//-- assert
 	require.True(t, res)
@@ -33,11 +35,12 @@ func TestIsVersionUnsupportedReturnsTrueWhenVersionGreaterThanCurrent(t *testing
 
 func TestIsVersionUnsupportedReturnsFalseWhenVersionValid(t *testing.T) {
 	//-- arrange
+	const MIN_VERSION = 1
 	const CURRENT_VERSION = 1
 	version := types.Version(CURRENT_VERSION)
 
 	//-- act
-	res := version.IsUnsupported(CURRENT_VERSION)
+	res := version.IsUnsupported(MIN_VERSION, CURRENT_VERSION)
 
 	//-- assert
 	require.False(t, res)
