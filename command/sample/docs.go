@@ -3,12 +3,12 @@
 // Boiler plate flag-based command for convenience:
 //
 //	type SampleCommand struct {
-//		command.FlagCommandBase
+//		command.CommandBase
 //	}
 //
 //	func NewSampleCommand() *SampleCommand {
 //		return &SampleCommand{
-//			FlagCommandBase: command.NewFlagCommandBase("name", "description"),
+//			CommandBase: command.NewCommandBase("name", "description"),
 //		}
 //	}
 //

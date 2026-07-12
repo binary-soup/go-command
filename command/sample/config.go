@@ -34,7 +34,7 @@ func (cmd *ConfigCommand) Initialize() error {
 
 func (cmd ConfigCommand) Run(args []string) error {
 	if cmd.Config.Version.IsUnsupported(CONFIG_VERSION) {
-		return errors.Format("version \"%d\" unsupported", cmd.Config.Version)
+		return errors.Format("config version \"%d\" unsupported", cmd.Config.Version)
 	}
 
 	if cmd.Config.Version.IsOutOfDate(CONFIG_VERSION) {
