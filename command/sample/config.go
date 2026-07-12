@@ -18,26 +18,18 @@ type Config struct {
 
 type ConfigCommand struct {
 	command.CommandBase
-
-	ConfigLoader json.Loader[Config]
-	Config       Config
+	command.ConfigCommand[Config]
 }
 
 func NewConfigCommand(configLoader json.Loader[Config]) *ConfigCommand {
 	return &ConfigCommand{
-		CommandBase:  command.NewCommandBase("config", "load and display the config file"),
-		ConfigLoader: configLoader,
+		CommandBase:   command.NewCommandBase("config", "load and display the config file"),
+		ConfigCommand: command.NewConfigCommand(configLoader),
 	}
 }
 
 func (cmd *ConfigCommand) Initialize() error {
-	var err error
-	cmd.Config, err = cmd.ConfigLoader.Load()
-	if err != nil {
-		return errors.Chain(err, "error loading config")
-	}
-
-	return nil
+	return cmd.LoadConfig()
 }
 
 func (cmd ConfigCommand) Run(args []string) error {
@@ -46,9 +38,9 @@ func (cmd ConfigCommand) Run(args []string) error {
 	}
 
 	if cmd.Config.Version.IsOutOfDate(CONFIG_VERSION) {
-		return errors.Format("config version [%d] out-of-date", cmd.Config.Version)
+		return errors.Format("config version \"%d\" out-of-date", cmd.Config.Version)
 	}
 
-	fmt.Printf("Data: %s\n", cmd.Config.Data)
+	fmt.Printf("Version: %d\nData: %s\n", cmd.Config.Version, cmd.Config.Data)
 	return nil
 }

@@ -17,7 +17,7 @@ func main() {
 
 	runner := command.NewRunner(
 		sample.NewHelloCommand(),
-		sample.NewConfigCommand(json.NewLoader[sample.Config]("")),
+		sample.NewConfigCommand(json.NewLoader[sample.Config]("config.json")),
 	)
 
 	if *ls || len(os.Args) < 2 {
