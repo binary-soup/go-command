@@ -1,6 +1,7 @@
 package sample
 
 import (
+	"errors"
 	"fmt"
 
 	"github.com/binarysoupdev/go-commando/command"
@@ -28,7 +29,7 @@ func (cmd HelloCommand) Run(args []string) error {
 	cmd.ParseFlags(args)
 
 	if *name == "" {
-		return fmt.Errorf("name cannot be empty")
+		return errors.New("name cannot be empty")
 	}
 
 	fmt.Printf("Hello %s!\n", *name)
