@@ -8,9 +8,8 @@ import (
 )
 
 type Loader[Config any] struct {
-	ConfigPath    string
-	ConfigVersion int
-	Config        Config
+	ConfigPath string
+	Config     Config
 }
 
 func NewLoader[Config any](path string) Loader[Config] {

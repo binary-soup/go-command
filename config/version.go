@@ -9,12 +9,11 @@ type Version struct {
 	Version int `json:"version"`
 }
 
-func (l *Loader[T]) LoadVersion() error {
+func (l *Loader[T]) LoadVersion() (int, error) {
 	v, err := json.UnmarshalFile[Version](l.ConfigPath)
 	if err != nil {
-		return errors.Chain(err, "error loading version JSON")
+		return -1, errors.Chain(err, "error loading version JSON")
 	}
 
-	l.ConfigVersion = v.Version
-	return nil
+	return v.Version, nil
 }
