@@ -4,8 +4,9 @@ go 1.25
 
 require (
 	github.com/binarysoupdev/got-style v1.1.0
-	github.com/binarysoupdev/tinsel v0.2.0
+	github.com/binarysoupdev/tinsel v1.0.0
 	github.com/stretchr/testify v1.11.1
+	github.com/binarysoupdev/go-extensions v0.1.0
 )
 
 require (

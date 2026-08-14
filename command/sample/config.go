@@ -4,9 +4,9 @@ import (
 	"fmt"
 
 	"github.com/binarysoupdev/go-commando/command"
-	"github.com/binarysoupdev/go-commando/errors"
-	"github.com/binarysoupdev/go-commando/json"
 	"github.com/binarysoupdev/go-commando/types"
+	"github.com/binarysoupdev/go-extensions/errors"
+	"github.com/binarysoupdev/go-extensions/json"
 )
 
 const (

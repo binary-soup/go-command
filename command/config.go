@@ -1,8 +1,8 @@
 package command
 
 import (
-	"github.com/binarysoupdev/go-commando/errors"
-	"github.com/binarysoupdev/go-commando/json"
+	"github.com/binarysoupdev/go-extensions/errors"
+	"github.com/binarysoupdev/go-extensions/json"
 )
 
 // Command component for loading a config object from JSON.
