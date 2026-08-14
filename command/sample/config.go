@@ -4,19 +4,15 @@ import (
 	"fmt"
 
 	"github.com/binarysoupdev/go-commando/command"
-	"github.com/binarysoupdev/go-commando/errors"
-	"github.com/binarysoupdev/go-commando/json"
-	"github.com/binarysoupdev/go-commando/types"
+	"github.com/binarysoupdev/go-extensions/errors"
+	"github.com/binarysoupdev/go-extensions/json"
 )
 
-const (
-	MIN_CONFIG_VERSION = 1
-	CONFIG_VERSION     = 2
-)
+const CONFIG_VERSION = 2
 
 type Config struct {
-	Version types.Version `json:"version"`
-	Data    string        `json:"data"`
+	Version int    `json:"version"`
+	Data    string `json:"data"`
 }
 
 // Sample config command for loading, verifying, and displaying a config file.
@@ -37,11 +33,11 @@ func (cmd *ConfigCommand) Initialize() error {
 }
 
 func (cmd ConfigCommand) Run(args []string) error {
-	if cmd.Config.Version.IsUnsupported(MIN_CONFIG_VERSION, CONFIG_VERSION) {
+	if cmd.Config.Version < 1 || cmd.Config.Version > CONFIG_VERSION {
 		return errors.Format("config version \"%d\" unsupported", cmd.Config.Version)
 	}
 
-	if cmd.Config.Version.IsOutOfDate(CONFIG_VERSION) {
+	if cmd.Config.Version < CONFIG_VERSION {
 		return errors.Format("config version \"%d\" out-of-date", cmd.Config.Version)
 	}
 

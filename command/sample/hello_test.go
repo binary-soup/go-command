@@ -7,7 +7,6 @@ import (
 	"github.com/binarysoupdev/go-commando/command/sample"
 	"github.com/binarysoupdev/go-commando/test"
 	"github.com/binarysoupdev/tinsel/pipe"
-	"github.com/binarysoupdev/tinsel/rand"
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/suite"
 )
@@ -34,8 +33,7 @@ func (s *HelloTestSuite) TestNameNotEmpty() {
 
 func (s *HelloTestSuite) TestPrintName() {
 	//-- arrange
-	r := rand.New(42)
-	var NAME = r.ASCII(10)
+	const NAME = "name"
 
 	out := pipe.OpenStdout(1)
 	defer out.Close()

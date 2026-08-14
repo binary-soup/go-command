@@ -3,12 +3,12 @@ package sample_test
 import (
 	"fmt"
 	"os"
+	"path/filepath"
 	"testing"
 
 	"github.com/binarysoupdev/go-commando/command/sample"
-	"github.com/binarysoupdev/go-commando/json"
 	"github.com/binarysoupdev/go-commando/test"
-	"github.com/binarysoupdev/tinsel/file"
+	"github.com/binarysoupdev/go-extensions/json"
 	"github.com/binarysoupdev/tinsel/pipe"
 	"github.com/stretchr/testify/suite"
 )
@@ -21,7 +21,7 @@ type ConfigTestSuite struct {
 
 func TestConfigCommandSuite(t *testing.T) {
 	s := ConfigTestSuite{
-		ConfigLoader: json.NewLoader[sample.Config](file.NewPath(t, "config.json")),
+		ConfigLoader: json.NewLoader[sample.Config](filepath.Join(t.TempDir(), "config.json")),
 	}
 
 	s.CommandSuite = test.NewCommandSuite(sample.NewConfigCommand(s.ConfigLoader))
@@ -52,9 +52,9 @@ func (s *ConfigTestSuite) TestRunFailsWhenLoadConfigFails() {
 	s.RequireResultFail("error loading config")
 }
 
-func (s *ConfigTestSuite) TestRunFailsWhenConfigVersionIsLessThanMin() {
+func (s *ConfigTestSuite) TestRunFailsWhenConfigVersionIsLessThanOne() {
 	//-- arrange
-	s.Config.Version = sample.MIN_CONFIG_VERSION - 1
+	s.Config.Version = 0
 	err := json.MarshalFile(s.Config, s.ConfigLoader.Path)
 	s.Require().NoError(err)
 
