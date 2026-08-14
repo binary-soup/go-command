@@ -52,9 +52,9 @@ func (s *ConfigTestSuite) TestRunFailsWhenLoadConfigFails() {
 	s.RequireResultFail("error loading config")
 }
 
-func (s *ConfigTestSuite) TestRunFailsWhenConfigVersionIsLessThanMin() {
+func (s *ConfigTestSuite) TestRunFailsWhenConfigVersionIsLessThanOne() {
 	//-- arrange
-	s.Config.Version = sample.MIN_CONFIG_VERSION - 1
+	s.Config.Version = 0
 	err := json.MarshalFile(s.Config, s.ConfigLoader.Path)
 	s.Require().NoError(err)
 
